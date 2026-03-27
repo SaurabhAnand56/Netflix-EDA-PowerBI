@@ -1,208 +1,234 @@
-# 🎬 Netflix Content Analysis — EDA + Power BI Dashboard
+# 🎬 Netflix EDA Dashboard
 
-> *"I picked Netflix because almost everyone has used it — and I wanted to work on a dataset that actually feels real, not just another iris or titanic."*
+<div align="center">
 
-This is my **2nd EDA + Power BI project**, built completely from scratch — raw CSV to a fully interactive 3-page dashboard. The goal was to treat it like a real analyst would: clean the data properly, explore it step by step in Python, find patterns that are actually worth talking about, and then present it visually in Power BI.
+![Netflix](https://img.shields.io/badge/Netflix-E50914?style=for-the-badge&logo=netflix&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=for-the-badge&logo=jupyter&logoColor=white)
+![PowerBI](https://img.shields.io/badge/PowerBI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
+![Plotly](https://img.shields.io/badge/Plotly-3F4F75?style=for-the-badge&logo=plotly&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
-Took a few wrong turns along the way (the genre unpivot bug was a fun one), but honestly that's where most of the learning happened.
+**The complete Netflix data analysis project — Jupyter EDA → Power BI Dashboard → Streamlit Web App.**
+
+[🚀 Live Demo](#) · [📊 Dataset](https://www.kaggle.com/datasets/shivamb/netflix-shows) · [👤 Author](#-author)
+
+</div>
 
 ---
 
-## 🔗 Quick Links
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Saurabh%20Anand-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/saurabhanand56/)
-[![GitHub](https://img.shields.io/badge/GitHub-SaurabhAnand56-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/SaurabhAnand56)
-[![Live Dashboard](https://img.shields.io/badge/Live%20Power%20BI%20Dashboard-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)](https://app.powerbi.com/view?r=eyJrIjoiZDk4YmJmYjQtMjA5NC00NjI4LTg0OTMtOTU5NWMxOGRkYzgxIiwidCI6ImRmODY3OWNkLWE4MGUtNDVkOC05OWFjLWM4M2VkN2ZmOTVhMCJ9)
-
----
-
-## 📁 Project Structure
+## 🔄 Project Evolution
 
 ```
-Netflix-EDA/
+v1.0  ──►  notebook/                  Step-by-step EDA in Jupyter
+              │
+              │  same insights · richer visuals
+              ▼
+v2.0  ──►  powerbi_dashboard/         Static PowerBI dashboard
+              │
+              │  same charts · now interactive + deployed
+              ▼
+v3.0  ──►  streamlit_app/             Live filterable web app
+```
+
+Each version builds on the last — the same dataset, the same 10-step analysis, progressively more interactive.
+
+---
+
+## 🗂️ Project Structure
+```
+netflix-eda-dashboard/               ← repo root
 │
 ├── dataset/
-│   └── netflix_titles.csv            # Raw dataset (8,808 titles, 12 columns)
+│   └── netflix_titles.csv           # Source data (8,807 titles)
+│
+├── images/                          # Screenshots & chart exports
 │
 ├── notebook/
-│   └── Netflix_EDA.ipynb             # Full EDA — 10 steps, 42 cells
+│   └── Netflix_EDA.ipynb            # v1.0 — Full EDA notebook
 │
-├── images/
-│   ├── content-overview.png          # Dashboard Page 1
-│   ├── trends-and-growth.png         # Dashboard Page 2
-│   └── deep-dive.png                 # Dashboard Page 3
+├── powerbi_dashboard/               # v2.0 — Power BI dashboard files
 │
-├── powerbi/
-│   └── Netflix_Dashboard.pbix        # Power BI file
+├── streamlit_app/                   # v3.0 — Interactive web app (NEW)
+│   │
+│   ├── app.py                       # ← Entry point: streamlit run app.py
+│   │
+│   ├── src/
+│   │   ├── __init__.py
+│   │   │
+│   │   ├── utils/
+│   │   │   ├── __init__.py
+│   │   │   ├── theme.py             # Netflix palette, CSS, Plotly helpers
+│   │   │   └── data_loader.py       # Load, clean & filter logic (cached)
+│   │   │
+│   │   ├── components/
+│   │   │   ├── __init__.py
+│   │   │   ├── sidebar.py           # Author profile card + sidebar filters
+│   │   │   └── ui_components.py     # KPI card, insight card, rec card, header
+│   │   │
+│   │   └── tabs/
+│   │       ├── __init__.py
+│   │       ├── tab_overview.py      # Tab 1 — Overview
+│   │       ├── tab_content.py       # Tab 2 — Content analysis
+│   │       ├── tab_geography.py     # Tab 3 — Geography
+│   │       ├── tab_timeline.py      # Tab 4 — Timeline
+│   │       ├── tab_deepdive.py      # Tab 5 — Deep Dive
+│   │       └── tab_recommender.py   # Tab 6 — Recommender engine
+│   │
+│   └── .streamlit/
+│       └── config.toml              # Netflix dark-theme config
 │
+├── requirements.txt                 # ← All deps: notebook + dashboard
+├── .gitignore
+├── LICENSE
 └── README.md
 ```
 
 ---
 
-## 📊 Dashboard Preview
+## 📸 What's Inside
 
-### Page 1 — Content Overview
-![Content Overview](images/content-overview.png)
+### v3.0 — Streamlit Web App *(this release)*
+> Netflix dark theme · 6 interactive tabs · Global sidebar filters · Content Recommender
 
-### Page 2 — Trends & Growth
-![Trends and Growth](images/trends-and-growth.png)
+| Tab | What It Shows |
+|---|---|
+| 📊 **Overview** | KPI cards, content-mix donut, top genres, ratings, duration histogram |
+| 🎭 **Content** | Rating breakdown, TV seasons, box plots, avg duration per rating |
+| 🌍 **Geography** | Choropleth world map, top 10 countries, Movies vs TV Shows by country |
+| 📅 **Timeline** | Library growth line chart, release year bars, monthly additions heatmap |
+| 🔍 **Deep Dive** | Missing values, correlation heatmap, browsable data table, key insights |
+| 🔮 **Recommender** | TF-IDF + cosine similarity with ranked similarity score bars |
 
-### Page 3 — Deep Dive
-![Deep Dive](images/deep-dive.png)
+### v2.0 — Power BI Dashboard
+> Static Netflix-themed Power BI report with pre-built visuals and slicers
+
+See `powerbi_dashboard/` folder.
+
+### v1.0 — Jupyter Notebook
+> Step-by-step EDA with detailed markdown explanations — ideal for understanding the analysis logic
+
+| Step | Content |
+|---|---|
+| 1–3 | Introduction, imports, load dataset |
+| 4–5 | Data cleaning, missing values analysis |
+| 6–7 | Univariate & bivariate analysis |
+| 8 | Visualisations (bar, pie, line, heatmap, word cloud) |
+| 9–10 | Key insights & conclusion |
+| + | Random Forest classifier · K-Means clustering · PCA · Content Recommender |
 
 ---
 
-## 🗂️ About the Dataset
+## ⚡ Quick Start
 
-Source: [Netflix Shows — Kaggle](https://www.kaggle.com/datasets/shivamb/netflix-shows)
-
-8,808 titles. 12 columns. Covers everything on Netflix up to 2021 — movies, TV shows, ratings, directors, cast, countries, genres and more. The data looks clean at first glance but has some real issues once you dig in (missing directors, multi-value genre columns, inconsistent duration formats).
-
-| Column | What it holds |
-|---|---|
-| `show_id` | Unique ID per title |
-| `type` | Movie or TV Show |
-| `title` | Name of the title |
-| `director` | Director — missing for ~30% of entries |
-| `cast` | Main cast members |
-| `country` | Country of production |
-| `date_added` | Date added to Netflix |
-| `release_year` | Original year of release |
-| `rating` | Content rating (TV-MA, R, PG-13, etc.) |
-| `duration` | Minutes (movies) or seasons (TV shows) |
-| `listed_in` | Genre tags — comma-separated |
-| `description` | Short summary |
-
----
-
-## 🐍 EDA Notebook — What's Inside
-
-**42 cells across 10 structured steps.** I tried to keep each section clear — what I'm doing, why it matters, then the actual code. Should be easy to follow even if you're just starting out with EDA.
-
-| Step | What's covered |
-|---|---|
-| 1 | Introduction — what is EDA, what are we trying to find |
-| 2 | Import libraries — pandas, numpy, matplotlib, seaborn |
-| 3 | Load dataset — shape, columns, dtypes, first look |
-| 4 | Data cleaning — fix date types, extract durations, handle duplicates |
-| 5 | Missing values — count, visualize, decide what to do |
-| 6 | Univariate analysis — type split, release years, ratings, duration, genres |
-| 7 | Bivariate analysis — ratings by type, countries by type, duration by rating |
-| 8 | Visualizations — growth over time, heatmap, correlation, word cloud |
-| 9 | Key insights — printed summary of everything found |
-| 10 | Conclusion — what we learned, what to explore next |
-
-### Run it yourself
+### v3.0 — Streamlit App
 
 ```bash
-# Clone the repo
-git clone https://github.com/SaurabhAnand56/Netflix-EDA-PowerBI.git
-cd Netflix-EDA-PowerBI
+# 1. Clone
+git clone https://github.com/SaurabhAnand56/netflix-eda-dashboard.git
+cd netflix-eda-dashboard
 
-# Install dependencies
-pip install pandas numpy matplotlib seaborn jupyter wordcloud
+# 2. Virtual environment
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
 
-# Open the notebook
+# 3. Install dependencies
+pip install -r streamlit_app/requirements.txt
+
+# 4. Run (dataset is already in dataset/ folder)
+cd streamlit_app
+streamlit run app.py
+```
+
+Open [http://localhost:8501](http://localhost:8501) in your browser.
+
+---
+
+### v1.0 — Jupyter Notebook
+
+```bash
+pip install jupyter pandas numpy matplotlib seaborn scikit-learn wordcloud
 jupyter notebook notebook/Netflix_EDA.ipynb
 ```
-
-> Place `netflix_titles.csv` inside the `dataset/` folder before running.
-
----
-
-## 📈 Power BI Dashboard
-
-3-page interactive report built in Power BI Desktop. Used a full Netflix dark theme — `#141414` canvas, `#E50914` red accents. Transformations in Power Query, metrics in DAX.
-
-### Page 1 — Content Overview
-KPI cards → Donut chart → Genre bar → Country bar → Rating bar → Slicers (type + rating)
-
-### Page 2 — Trends & Growth
-Line chart → Area chart → Monthly heatmap with red conditional formatting → Year slicer
-
-### Page 3 — Deep Dive
-Duration + rating KPIs → Grouped ratings bar → Seasons chart → Avg duration bar → Browse table
-
-### DAX Measures
-
-```dax
-Total Titles = COUNTROWS(netflix_titles)
-
-Total Movies =
-    CALCULATE(COUNTROWS(netflix_titles), netflix_titles[type] = "Movie")
-
-Total TV Shows =
-    CALCULATE(COUNTROWS(netflix_titles), netflix_titles[type] = "TV Show")
-
-Total Countries = DISTINCTCOUNT(netflix_titles[country])
-
-Avg Movie Duration =
-    ROUND(
-        CALCULATE(
-            AVERAGE(netflix_titles[duration_minutes]),
-            netflix_titles[type] = "Movie"
-        ), 0)
-
-Titles in 2019 =
-    CALCULATE([Total Titles], netflix_titles[year_added] = 2019)
-```
-
-### Something worth mentioning
-
-When I split the `listed_in` (genres) column inside the main table in Power Query, every row got multiplied by the number of genres — KPI cards were showing 19K titles instead of 8,808. The fix was creating a **separate reference table** (`netflix_genres`) and linking it via `show_id`. Also had to change the cross-filter direction to **Both** in model view — otherwise the genre chart just showed the total count for everything. Took a while to debug but made complete sense once I understood how Power BI relationships work.
-
----
-
-## 💡 What the Data Actually Says
-
-- Netflix has **nearly 3x more Movies than TV Shows** — 69.6% of the library is movies
-- **United States leads** with 32% of all titles. **India is second** at 11% — the global investment is clearly real
-- **TV-MA is the most common rating** — Netflix builds for adults first
-- **2019 was the peak year** — 2,016 titles added in a single year. Slowed down after, likely COVID impacting productions globally
-- **67% of TV Shows have just 1 season** — most shows don't survive past their debut
-- Average movie length is **100 minutes** — the classic feature film runtime
-- The `director` column is blank for nearly **30% of titles** — mostly TV Shows. Important to know before any director-based analysis
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Tool | Used for |
+| Library | Version | Used In |
+|---|---|---|
+| [Streamlit](https://streamlit.io) | ≥ 1.32 | v3.0 — web app framework |
+| [Plotly](https://plotly.com/python/) | ≥ 5.20 | v3.0 — all interactive charts & map |
+| [Pandas](https://pandas.pydata.org) | ≥ 2.0 | v1.0, v3.0 — data manipulation |
+| [NumPy](https://numpy.org) | ≥ 1.26 | v1.0, v3.0 — numerical operations |
+| [scikit-learn](https://scikit-learn.org) | ≥ 1.4 | v1.0, v3.0 — TF-IDF, cosine sim, RF, K-Means |
+| [Matplotlib](https://matplotlib.org) | ≥ 3.7 | v1.0 — static plots |
+| [Seaborn](https://seaborn.pydata.org) | ≥ 0.13 | v1.0 — statistical charts |
+| [WordCloud](https://github.com/amueller/word_cloud) | ≥ 1.9 | v1.0 — description word cloud |
+| Power BI Desktop | — | v2.0 — dashboard |
+
+---
+
+## 📊 Dataset
+
+| Field | Value |
 |---|---|
-| Python + Pandas | Data cleaning and analysis |
-| Matplotlib + Seaborn | Charts and visualizations in notebook |
-| WordCloud | Description text visualization |
-| Jupyter Notebook | Interactive analysis environment |
-| Power BI Desktop | Dashboard building |
-| Power Query (M) | Data transformation |
-| DAX | Custom measures and KPIs |
+| Source | [Kaggle — Netflix Movies and TV Shows](https://www.kaggle.com/datasets/shivamb/netflix-shows) |
+| File | `dataset/netflix_titles.csv` |
+| Rows | 8,807 |
+| Columns | 12 — `show_id`, `type`, `title`, `director`, `cast`, `country`, `date_added`, `release_year`, `rating`, `duration`, `listed_in`, `description` |
+| Coverage | Netflix catalogue as of 2021 |
 
 ---
 
-## 🔮 What I'd Build Next
+## 🔀 Version Comparison
 
-- NLP on the `description` column — topic modelling, keyword extraction
-- Content-based recommendation system using genre + description similarity
-- Time series forecast for future content additions
-- Streamlit app to make it interactive on the web
+| Feature | Notebook v1.0 | Power BI v2.0 | Streamlit v3.0 |
+|---|---|---|---|
+| Missing values chart | ✅ Static | ✅ Slicer | ✅ Interactive Plotly |
+| Content mix | ✅ Bar + Pie | ✅ Donut | ✅ Animated donut |
+| Genre analysis | ✅ H-bar | ✅ Bar | ✅ Colour-scaled bar |
+| Rating breakdown | ✅ Bar | ✅ Bar | ✅ Grouped + box plots |
+| Country analysis | ✅ Bar | ✅ Map | ✅ Choropleth + stacked |
+| Timeline / growth | ✅ Line | ✅ Line | ✅ Filled area + heatmap |
+| Movie duration | ✅ Histogram | ✅ Histogram | ✅ With mean/median lines |
+| Content recommender | ✅ Console | ❌ | ✅ Full UI + score bars |
+| Live filters | ❌ | ✅ Slicers | ✅ Sidebar filters |
+| Correlation heatmap | ✅ Seaborn | ❌ | ✅ Interactive Plotly |
+| Word cloud | ✅ | ❌ | 🔜 v3.1 |
+| K-Means clustering | ✅ | ❌ | 🔜 v3.1 |
+| Deployable | ❌ | ❌ | ✅ |
 
 ---
 
-## 📬 Let's Connect
+## 🗺️ Roadmap
 
-Currently looking for **Data Analyst** opportunities. If you have feedback, want to collaborate, or just want to connect — always up for it.
+- [x] **v1.0** — Jupyter EDA notebook
+- [x] **v2.0** — Power BI dashboard
+- [x] **v3.0** — Streamlit interactive web app
+- [ ] **v3.1** — Word cloud + K-Means cluster explorer tab
+- [ ] **v3.2** — Deploy to Streamlit Community Cloud
+- [ ] **v3.3** — Dark / light theme toggle
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/saurabhanand56/)
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=flat-square&logo=github&logoColor=white)](https://github.com/SaurabhAnand56)
+---
+
+## 👤 Author
+
+**Saurabh Anand**
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/saurabhanand56/)
+[![GitHub](https://img.shields.io/badge/GitHub-24292e?style=flat&logo=github&logoColor=white)](https://github.com/SaurabhAnand56)
 
 ---
 
 ## 📄 License
 
-Dataset — [CC0 Public Domain via Kaggle](https://www.kaggle.com/datasets/shivamb/netflix-shows)
-Code and dashboard — free to use for learning and reference.
+This project is licensed under the **MIT License** — feel free to use, fork, and build on it.
 
 ---
 
-*If this was useful or gave you ideas for your own project — a ⭐ would genuinely mean a lot. Still building out my portfolio and every bit helps 🙌*
+<div align="center">
+  <sub>v1.0 → Notebook &nbsp;·&nbsp; v2.0 → Power BI &nbsp;·&nbsp; v3.0 → Streamlit &nbsp;·&nbsp; Built with ❤️ and ☕ by Saurabh Anand</sub>
+</div>
