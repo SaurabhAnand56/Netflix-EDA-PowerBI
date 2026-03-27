@@ -13,7 +13,7 @@
 
 **The complete Netflix data analysis project — Jupyter EDA → Power BI Dashboard → Streamlit Web App.**
 
-[🚀 Live Demo](#) · [📊 Dataset](https://www.kaggle.com/datasets/shivamb/netflix-shows) · [👤 Author](#-author)
+[🚀 Live Demo](https://netflixeda.streamlit.app/) · [📊 Dataset](https://www.kaggle.com/datasets/shivamb/netflix-shows) · [👤 Author](https://github.com/SaurabhAnand56)
 
 </div>
 
