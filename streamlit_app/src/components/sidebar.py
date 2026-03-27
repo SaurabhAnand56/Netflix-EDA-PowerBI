@@ -6,7 +6,7 @@ Sidebar: author profile card (GitHub photo), dataset path, all filters.
 import streamlit as st
 from src.utils.theme import NETFLIX_RED, TEXT_PRIMARY, TEXT_MUTED
 from src.utils.data_loader import apply_filters
-from src.components.ui_components import section_label
+from src.components.ui_components import section_header as section_label
 
 AUTHOR = {
     "name":     "Saurabh Anand",
